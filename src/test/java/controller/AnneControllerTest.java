@@ -1,6 +1,10 @@
 package controller;
 
-import org.junit.jupiter.api.Test;
+import anne.Anne;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * DOCUMENTATION
@@ -9,18 +13,26 @@ import org.junit.jupiter.api.Test;
  */
 public class AnneControllerTest {
 
+    Anne anne;
+    AnneController ac = new AnneController();
+
     @Test
     public void createTest() {
-
+        anne = ac.create();
+        assertEquals(Anne.class, anne.getClass());
     }
 
     @Test
     public void anneToJsonTest() {
-
+        anne = ac.create();
+        String json = ac.anneToJson(anne);
+        assertNotNull(json);
     }
 
     @Test
-    public void repopulateTest() {
-
+    public void jsonToAnneTest() {
+        String json = new String();
+        anne = ac.jsonToAnne(json);
+        assertEquals(Anne.class, anne.getClass());
     }
 }
