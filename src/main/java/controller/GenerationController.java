@@ -8,10 +8,10 @@ import generation.Generation;
  *
  * @author Jonathan Harhoff (j.harhoff@tarent.de)
  */
-public class GenerationController {
+public final class GenerationController {
 
     public Generation create(int amountOfAnnes) {
-        return new Generation();
+        return new Generation(amountOfAnnes);
     }
 
     /**
@@ -35,18 +35,17 @@ public class GenerationController {
      * @return
      */
     public Generation jsonToGeneration(String json) {
-        return new Generation();
+        return new Generation(json);
     }
 
     /**
      * This method repopulates a List of neural networks by keeping the successful NNs and generating new ones from their genes.
      *
-     * @param generationSize the amount of neural networks that gets returned
      * @param oldGeneration the neural networks to keep alive and create new NNs from
      * @return next generation of NNs
      */
-    public Generation repopulate(int generationSize, Generation oldGeneration) {
-        Generation nextGeneration = new Generation();
+    public Generation repopulate(Generation oldGeneration) {
+        Generation nextGeneration = new Generation(oldGeneration);
 
         return nextGeneration;
     }

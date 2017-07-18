@@ -8,14 +8,14 @@ import anne.Anne;
  *
  * @author Jonathan Harhoff (j.harhoff@tarent.de)
  */
-public class AnneController {
+public final class AnneController {
 
-    public Anne create() {
+    static public Anne create() {
         return new Anne();
     }
 
 
-    public Anne jsonToAnne(String genome) {
+    static public Anne jsonToAnne(String genome) {
         return new Anne();
     }
 
@@ -27,7 +27,7 @@ public class AnneController {
      * @param anne
      * @return
      */
-    public String anneToJson(Anne anne) {
+    static public String anneToJson(Anne anne) {
         StringBuilder sb = new StringBuilder();
 
 
