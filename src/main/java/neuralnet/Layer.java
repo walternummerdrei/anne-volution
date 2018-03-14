@@ -4,11 +4,12 @@ import neuralnet.neurons.Neuron;
 
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 
 
 public class Layer {
 
-    private LinkedHashSet<Neuron> neurons;
+    private LinkedHashSet<Neuron> neurons = new LinkedHashSet<>();
 
 
     public Layer(int amountOfNeurons, Layer targets) {
@@ -21,7 +22,13 @@ public class Layer {
         }
 
         if (targets != null) {
-            neurons.parallelStream().forEach(neuron -> neuron.addTarget(neuron));
+            for (Neuron neuron : neurons) {
+                targets
+                        .getNeurons()
+                        .forEach(targetNeuron ->
+                                neuron.addTarget(targetNeuron)
+                        );
+            }
         }
     }
 
@@ -39,7 +46,7 @@ public class Layer {
         return neurons;
     }
 
-    public void receiveInputs(double[] inputs) {
+    public void receiveInputs(LinkedList<Double> inputs) {
         Iterator<Neuron> it = neurons.iterator();
         for (double input : inputs) {
             if (it.hasNext()) {
@@ -51,8 +58,8 @@ public class Layer {
         }
     }
 
-    public LinkedHashSet<Double> getOutputs() {
-        LinkedHashSet<Double> outputs = new LinkedHashSet<>();
+    public LinkedList<Double> getOutputs() {
+        LinkedList<Double> outputs = new LinkedList<>();
 
         for (Neuron neuron : neurons) {
             outputs.add(neuron.calculateOutput());

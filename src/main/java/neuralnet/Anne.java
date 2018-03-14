@@ -1,6 +1,6 @@
 package neuralnet;
 
-import java.util.LinkedHashSet;
+import java.util.LinkedList;
 
 
 public class Anne {
@@ -37,7 +37,7 @@ public class Anne {
         this.outputLayer = new Layer(other.outputLayer);
     }
 
-    public LinkedHashSet<Double> processInputs(double[] inputs) {
+    public LinkedList<Double> processInputs(LinkedList<Double> inputs) {
         inputLayer.receiveInputs(inputs);
         inputLayer.sendOutputs();
 

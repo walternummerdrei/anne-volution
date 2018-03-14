@@ -1,5 +1,6 @@
 package neuralnet.neurons;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import static java.util.concurrent.ThreadLocalRandom.current;
@@ -10,9 +11,9 @@ import static neuralnet.neurons.Sigmoid.calculateMutationValue;
 
 public class Neuron {
 
-    private Set<Target> targets;
+    private Set<Target> targets = new HashSet<>();
 
-    private boolean isInputNeuron;
+    private boolean inputNeuron;
 
     private double activationIntensity;
 
@@ -22,13 +23,16 @@ public class Neuron {
 
     private double threshold;
 
-    public Neuron(boolean isInputNeuron) {
-        this.isInputNeuron = isInputNeuron;
+    public Neuron(boolean inputNeuron) {
+        this.inputNeuron = inputNeuron;
         this.threshold = 0.5;
         this.activationIntensity = 1;
+        this.bias = 0;
+        mutate();
     }
 
     public Neuron(Neuron neuron) {
+        this.inputNeuron = neuron.isInputNeuron();
         this.targets = neuron.getTargets();
         this.activationIntensity = neuron.getActivationIntensity();
         this.bias = neuron.getBias();
@@ -48,11 +52,13 @@ public class Neuron {
             setThreshold(threshold + calculateMutationValue(current().nextDouble(RANDOM_LIMIT)));
         }
 
-        targets.parallelStream().forEach(target -> {
-            if (current().nextDouble(RANDOM_LIMIT) <= MUTATION_THRESHOLD) {
-                target.setMultiplier(target.getMultiplier() + calculateMutationValue(current().nextDouble(RANDOM_LIMIT)));
-            }
-        });
+        if (targets != null) {
+            targets.parallelStream().forEach(target -> {
+                if (current().nextDouble(RANDOM_LIMIT) <= MUTATION_THRESHOLD) {
+                    target.setMultiplier(target.getMultiplier() + calculateMutationValue(current().nextDouble(RANDOM_LIMIT)));
+                }
+            });
+        }
     }
 
     public void receiveInput(double input) {
@@ -120,5 +126,9 @@ public class Neuron {
 
     public void setThreshold(double threshold) {
         this.threshold = threshold;
+    }
+
+    public boolean isInputNeuron() {
+        return inputNeuron;
     }
 }
